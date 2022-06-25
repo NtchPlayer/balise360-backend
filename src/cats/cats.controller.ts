@@ -9,40 +9,40 @@ import {
   ParseIntPipe,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './dto';
-import { User } from './user.entity';
-import { UsersService } from './users.service';
+import { CreateCatDto, UpdateCatDto } from './dto';
+import { Cat } from './cat.entity';
+import { CatsService } from './cats.service';
 
-@Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+@Controller('cats')
+export class CatsController {
+  constructor(private readonly catsService: CatsService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.create(createUserDto);
+  create(@Body() createCatDto: CreateCatDto): Promise<Cat> {
+    return this.catsService.create(createCatDto);
   }
 
   @Get()
-  findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Cat> {
     try {
-      return await this.usersService.findOne(id);
+      return await this.catsService.findOne(id);
     } catch (err) {
       throw new NotFoundException();
     }
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto): Promise<User> {
-    return this.usersService.update(id, updateUserDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateCatDto: UpdateCatDto): Promise<Cat> {
+    return this.catsService.update(id, updateCatDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
-    return this.usersService.remove(id);
+    return this.catsService.remove(id);
   }
 }

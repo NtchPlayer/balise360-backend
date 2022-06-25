@@ -1,16 +1,13 @@
 import {
-  BaseEntity,
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  // BeforeInsert,
 } from 'typeorm';
-// import * as bcrypt from 'bcryptjs';
 
 @Entity('refresh_tokens')
-export class RefreshToken extends BaseEntity {
+export class RefreshToken {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
@@ -39,13 +36,4 @@ export class RefreshToken extends BaseEntity {
 
   @Column('date')
   expires: Date;
-
-  // @BeforeInsert()
-  // async hashPassword() {
-  //   this.password = await bcrypt.hash(this.password, 8);
-  // }
-
-  // async validatePassword(password: string): Promise<boolean> {
-  //   return bcrypt.compare(password, this.password);
-  // }
 }

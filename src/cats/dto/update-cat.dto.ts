@@ -1,4 +1,4 @@
-export class UpdateUserDto {
+export class UpdateCatDto {
   firstName: string;
   lastName: string;
   isActive: boolean;

@@ -19,7 +19,7 @@ import * as Joi from 'joi';
         ACCESS_TOKEN_SECRET: Joi.string().required(),
         REFRESH_TOKEN_SECRET: Joi.string().required(),
         DB_TYPE: Joi.string().required(),
-        DB_HOST: Joi.string().required(),
+        DB_HOST: Joi.string(),
         DB_PORT: Joi.number().required(),
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),

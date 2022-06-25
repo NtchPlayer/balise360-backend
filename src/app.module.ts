@@ -36,7 +36,7 @@ import * as Joi from 'joi';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [Cat, User, RefreshToken],
-      synchronize: true,
+      synchronize: Boolean(process.env.DEV) || false,
     }),
     AuthModule,
     CatsModule,

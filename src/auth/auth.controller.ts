@@ -30,7 +30,7 @@ export class AuthController {
     return req.user;
   }
 
-  @Post('/refresh')
+  @Post('refresh')
   async refresh(@Body() refreshTokenDOT: RefreshTokenDOT) {
     const { user, token } =
       await this.tokenService.createAccessTokenFromRefreshToken(

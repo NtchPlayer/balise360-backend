@@ -8,6 +8,7 @@ import { User } from './users/user.entity';
 import { RefreshToken } from './token/refresh-token.entity';
 import { AuthModule } from './auth/auth.module';
 import { CatsModule } from './cats/cats.module';
+import { NewsletterModule } from './newsletter/newsletter.module';
 import { UsersModule } from './users/users.module';
 import * as Joi from 'joi';
 
@@ -25,6 +26,7 @@ import * as Joi from 'joi';
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
         IS_DEV: Joi.boolean().required(),
+        API_KEY_SENDINGBLUE: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
@@ -40,6 +42,7 @@ import * as Joi from 'joi';
     AuthModule,
     CatsModule,
     UsersModule,
+    NewsletterModule,
   ],
   controllers: [AppController],
   providers: [AppService],

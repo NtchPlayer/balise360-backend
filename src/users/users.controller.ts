@@ -18,7 +18,7 @@ export class UsersController {
     private readonly tokenService: TokenService,
   ) {}
 
-  @Post()
+  @Post('signup')
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.create(createUserDto);
     const accessToken = await this.tokenService.generateAccessToken(user);

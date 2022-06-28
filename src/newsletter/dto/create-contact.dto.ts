@@ -4,7 +4,5 @@ export class CreateContactDto {
   attributes: {
     PRENOM: string;
     NOM: string;
-    DATE_DE_NAISSANCE: string;
-    SMS: string;
   };
 }

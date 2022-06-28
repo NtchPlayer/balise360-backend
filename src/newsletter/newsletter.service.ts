@@ -1,7 +1,7 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { CreateContactDto } from './dto';
-import { catchError, map, Observable, switchMap, tap } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs';
 import { AxiosResponse } from 'axios';
 
 @Injectable()
@@ -16,17 +16,6 @@ export class NewsletterService {
           createContactDto.attributes.PRENOM,
           3,
         );
-      }),
-      catchError((e) => {
-        throw new HttpException(e.response.data, e.response.status);
-      }),
-    );
-  }
-
-  public async getContact() {
-    return this.httpService.get('/contacts/29').pipe(
-      switchMap(() => {
-        return this.sendEmail('nathanchevalet@orange.fr', 'nathan', 3);
       }),
       catchError((e) => {
         throw new HttpException(e.response.data, e.response.status);

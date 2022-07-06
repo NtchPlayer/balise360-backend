@@ -61,7 +61,7 @@ import { TrailsModule } from './trails/trails.module';
         Trail,
         Trip,
       ],
-      synchronize: Boolean(process.env.IS_DEV) || false,
+      synchronize: true,
     }),
     AuthModule,
     CatsModule,

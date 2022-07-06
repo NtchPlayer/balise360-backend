@@ -9,8 +9,8 @@ import { AuthPayloadDto, RefreshTokenPayloadDto } from './dto';
 import { UsersService } from '../users/users.service';
 
 const BASE_OPTIONS: SignOptions = {
-  issuer: 'https://my-app.com',
-  audience: 'https://my-app.com',
+  issuer: 'https://api.balise360.fr',
+  audience: 'https://www.balise360.fr',
 };
 
 @Injectable()
@@ -41,10 +41,11 @@ export class TokenService {
   public async generateAccessToken(user: User): Promise<string> {
     const opts: SignOptions = {
       ...BASE_OPTIONS,
+      expiresIn: 60 * 60 * 24,
       subject: String(user.id),
     };
 
-    return this.jwtService.signAsync({}, opts);
+    return this.jwtService.signAsync({ username: user.username }, opts);
   }
 
   public async generateRefreshToken(

@@ -1,5 +1,4 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-
 import { UsersService } from 'src/users/users.service';
 import { AuthLoginDto } from './dto';
 import { User } from '../users/user.entity';
@@ -33,15 +32,23 @@ export class AuthService {
       1000 * 60 * 60 * 24 * 30,
     );
 
-    const payload = this.tokenService.buildResponsePayload(
+    return this.tokenService.buildResponsePayload(
       user,
       accessToken,
       refreshToken,
     );
+  }
 
-    return {
-      status: 'success',
-      data: payload,
-    };
+  async getUser(userId: number): Promise<User> {
+    try {
+      const user = await this.usersService.findById(userId);
+      delete user.password;
+      // delete user.id;
+      delete user.createdAt;
+      delete user.updatedAt;
+      return user;
+    } catch {
+      throw new UnauthorizedException("This user don't exist.");
+    }
   }
 }

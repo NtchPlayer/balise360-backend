@@ -25,9 +25,10 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  @Get('user')
+  async getProfile(@Request() req) {
+    const user = await this.authService.getUser(parseInt(req.user.userId));
+    return { user };
   }
 
   @Post('refresh')

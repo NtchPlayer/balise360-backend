@@ -6,9 +6,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
+  OneToMany,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
 import { hash } from 'bcryptjs';
+import { QuizData } from '../quizDatas/quizData.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -40,6 +41,26 @@ export class User extends BaseEntity {
 
   @Column('varchar', { length: '50', nullable: true })
   username?: string;
+
+  @Column('varchar', { length: 50 })
+  firstname: string;
+
+  @Column('varchar', { length: 50 })
+  lastname: string;
+
+  @Column({ type: 'date' })
+  birthday: string;
+
+  @Column('enum', { enum: ['female', 'male', 'other'] })
+  gender: string;
+
+  @Column('int', { nullable: true })
+  profile: number;
+
+  @OneToMany(() => QuizData, (quizData) => quizData.user, {
+    cascade: true,
+  })
+  quizDatas: QuizData[];
 
   @BeforeInsert()
   async hashPassword() {

@@ -37,7 +37,10 @@ export class CatsController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateCatDto: UpdateCatDto): Promise<Cat> {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateCatDto: UpdateCatDto,
+  ): Promise<Cat> {
     return this.catsService.update(id, updateCatDto);
   }
 

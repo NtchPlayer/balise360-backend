@@ -1,4 +1,11 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 
 import { TrailsService } from './trails.service';
 import { CreateTrailsDto } from './dto';
@@ -13,17 +20,14 @@ export class TrailsController {
     return this.trailsService.createTrail(createTrailsDto);
   }
 
-  // @Get(':id')
-  // show(@Param('id', ParseIntPipe) id: number) {
-  //   return this.trailsService.showById(id);
-  // }
+  @Get(':id')
+  async show(@Param('id', ParseIntPipe) id: number) {
+    return await this.trailsService.showTrailById(id);
+  }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Post('/quiz')
-  // addQuizResult(@Body() addQuizResultDto: AddQuizResultDto, @Request() req) {
-  //   return this.usersService.updateQuizDatas(
-  //     parseInt(req.user.userId),
-  //     addQuizResultDto,
-  //   );
+  // @Get('kml/:id')
+  // async xmlResponse(@Response() res, @Param('id', ParseIntPipe) id: number) {
+  //   res.set('Content-Type', 'text/plain');
+  //   res.send(await this.trailsService.getKml(id));
   // }
 }

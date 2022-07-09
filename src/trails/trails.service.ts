@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Trail } from './trail.entity';
-import { Trip } from './trip.entity';
+import { Trip } from '../trips/trip.entity';
 import { CreateTrailsDto } from './dto';
 
 @Injectable()
@@ -21,6 +21,7 @@ export class TrailsService {
       const trip = new Trip();
       trip.name = e.name;
       trip.description = e.description;
+      trip.geojson = e.geojson;
       trail.trips.push(trip);
     }
 
@@ -29,4 +30,13 @@ export class TrailsService {
 
     return await this.trailRepository.save(trail);
   }
+
+  showTrailById(id: number): Promise<Trail> {
+    return this.trailRepository.findOneBy({ id });
+  }
+
+  // async getKml(id: number): Promise<string> {
+  //   const trail = await this.trailRepository.findOneBy({ id });
+  //   return trail.geojson;
+  // }
 }

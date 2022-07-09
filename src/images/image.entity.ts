@@ -5,11 +5,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
-import { Trail } from './trail.entity';
+import { Trail } from '../trails/trail.entity';
+import { Gear } from '../gears/gear.entity';
 
-@Entity('trips')
-export class Trip {
+@Entity('images')
+export class Image {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
@@ -30,16 +33,16 @@ export class Trip {
   })
   updatedAt: Date;
 
-  @Column('varchar', { length: 512 })
-  name: string;
+  @Column('varchar', { length: 100 })
+  file: string;
 
-  @Column('text', { nullable: true })
-  description: string;
+  @Column('varchar', { length: 200 })
+  alt: string;
 
-  // @ManyToOne(() => Question, (question) => question.answers)
-  // question: Question;
-
-  // Un parcours appartient un seul gr
-  @ManyToOne(() => Trail, (trail) => trail.trips)
+  @ManyToOne(() => Trail, (trail) => trail.images)
   trail: Trail;
+
+  @OneToOne(() => Gear)
+  @JoinColumn()
+  gear: Gear;
 }

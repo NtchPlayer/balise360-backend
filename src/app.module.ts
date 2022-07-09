@@ -17,7 +17,13 @@ import { Answer } from './questions/answer.entity';
 import { RefreshToken } from './token/refresh-token.entity';
 import { QuizData } from './quizDatas/quizData.entity';
 import { Trail } from './trails/trail.entity';
-import { Trip } from './trails/trip.entity';
+import { Trip } from './trips/trip.entity';
+import { Difficulty } from './difficulties/difficulty.entity';
+import { Image } from './images/image.entity';
+import { Notice } from './notices/notice.entity';
+import { Traffic } from './traffics/traffic.entity';
+import { GearCategory } from './gears/gearCategories.entity';
+import { Gear } from './gears/gear.entity';
 
 // Module
 import { AuthModule } from './auth/auth.module';
@@ -26,6 +32,7 @@ import { NewsletterModule } from './newsletter/newsletter.module';
 import { UsersModule } from './users/users.module';
 import { QuestionsModule } from './questions/questions.modules';
 import { TrailsModule } from './trails/trails.module';
+import { TripsModule } from './trips/trips.module';
 
 @Module({
   imports: [
@@ -60,6 +67,12 @@ import { TrailsModule } from './trails/trails.module';
         QuizData,
         Trail,
         Trip,
+        Difficulty,
+        Image,
+        Notice,
+        Traffic,
+        GearCategory,
+        Gear,
       ],
       synchronize: Boolean(process.env.IS_DEV) || false,
     }),
@@ -69,6 +82,7 @@ import { TrailsModule } from './trails/trails.module';
     NewsletterModule,
     QuestionsModule,
     TrailsModule,
+    TripsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

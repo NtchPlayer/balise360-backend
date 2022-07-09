@@ -1,4 +1,4 @@
-import { CreateTripsDto } from './';
+import { CreateTripsDto } from '../../trips/dto';
 
 export interface CreateTrailsDto {
   name: string;

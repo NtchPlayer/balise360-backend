@@ -1,19 +1,18 @@
 import { Module } from '@nestjs/common';
 
 // Service
-import { TrailsService } from './trails.service';
+import { TripsService } from './trips.service';
 
-import { TrailsController } from './trails.controller';
+import { TrailsController } from './trips.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Trail } from './trail.entity';
-import { Trip } from '../trips/trip.entity';
+import { Trip } from './trip.entity';
 
 // import { JwtModule } from '@nestjs/jwt';
 // import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Trail, Trip]),
+    TypeOrmModule.forFeature([Trip]),
     // JwtModule.registerAsync({
     //   imports: [ConfigModule],
     //   useFactory: async () => ({
@@ -22,8 +21,8 @@ import { Trip } from '../trips/trip.entity';
     //   inject: [ConfigService],
     // }),
   ],
-  providers: [TrailsService],
+  providers: [TripsService],
   controllers: [TrailsController],
-  exports: [TrailsService],
+  exports: [TripsService],
 })
-export class TrailsModule {}
+export class TripsModule {}

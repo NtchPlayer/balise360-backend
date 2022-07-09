@@ -7,9 +7,13 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { hash } from 'bcryptjs';
 import { QuizData } from '../quizDatas/quizData.entity';
+import { Trail } from '../trails/trail.entity';
+import { Notice } from '../notices/notice.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -61,6 +65,15 @@ export class User extends BaseEntity {
     cascade: true,
   })
   quizDatas: QuizData[];
+
+  @OneToMany(() => Notice, (notice) => notice.user, {
+    cascade: true,
+  })
+  notices: Notice[];
+
+  @ManyToMany(() => Trail)
+  @JoinTable()
+  favorites: Trail[];
 
   @BeforeInsert()
   async hashPassword() {

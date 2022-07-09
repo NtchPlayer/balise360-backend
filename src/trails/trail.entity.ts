@@ -17,8 +17,9 @@ import { Trip } from '../trips/trip.entity';
 import { Difficulty } from '../difficulties/difficulty.entity';
 import { Image } from '../images/image.entity';
 import { Gear } from '../gears/gear.entity';
-import { Traffic } from '../traffics/traffic.entity';
-import { Notice } from '../notices/notice.entity';
+import { Review } from '../reviews/review.entity';
+import { QuizData } from '../quizDatas/quizData.entity';
+import { Question } from '../questions/question.entity';
 
 @Entity('trails')
 export class Trail {
@@ -54,9 +55,6 @@ export class Trail {
   @Column('longtext')
   geojson: string;
 
-  @Column('time', { nullable: true })
-  duration: string;
-
   @Column('int', { nullable: true })
   elevation: number;
 
@@ -73,10 +71,11 @@ export class Trail {
   difficulty: Difficulty;
 
   // Chaque trail doit avoir un traffic
-  @ManyToOne(() => Traffic, (traffic) => traffic.trails, {
-    cascade: true,
+  @Column('enum', {
+    enum: ['Faible', 'Moyenne', 'Forte'],
+    nullable: true,
   })
-  traffic: Traffic;
+  traffic: string;
 
   // Un trail peut correspondre à plusieurs Trips
   @OneToMany(() => Trip, (trip) => trip.trail, {
@@ -89,13 +88,22 @@ export class Trail {
   })
   images: Image[];
 
-  @OneToMany(() => Notice, (notice) => notice.trail, {
+  @OneToMany(() => Review, (review) => review.trail, {
     cascade: true,
   })
-  notices: Notice[];
+  reviews: Review[];
+
+  @OneToMany(() => QuizData, (quizData) => quizData.trail, {
+    cascade: true,
+  })
+  quizDatas: QuizData[];
 
   // Un trail peut avoir plusieurs équipements
   @ManyToMany(() => Gear)
   @JoinTable()
   gears: Gear[];
+
+  @ManyToMany(() => Question)
+  @JoinTable()
+  questions: Question[];
 }

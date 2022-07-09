@@ -13,7 +13,8 @@ import {
 import { hash } from 'bcryptjs';
 import { QuizData } from '../quizDatas/quizData.entity';
 import { Trail } from '../trails/trail.entity';
-import { Notice } from '../notices/notice.entity';
+import { Review } from '../reviews/review.entity';
+import { RefreshToken } from '../token/refresh-token.entity';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -66,14 +67,19 @@ export class User extends BaseEntity {
   })
   quizDatas: QuizData[];
 
-  @OneToMany(() => Notice, (notice) => notice.user, {
+  @OneToMany(() => Review, (review) => review.user, {
     cascade: true,
   })
-  notices: Notice[];
+  reviews: Review[];
 
   @ManyToMany(() => Trail)
   @JoinTable()
   favorites: Trail[];
+
+  @OneToMany(() => RefreshToken, (refresh_token) => refresh_token.user, {
+    cascade: true,
+  })
+  refresh_tokens: RefreshToken[];
 
   @BeforeInsert()
   async hashPassword() {

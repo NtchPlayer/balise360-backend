@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Trail } from '../trails/trail.entity';
 import { Gear } from '../gears/gear.entity';
+import { Answer } from '../questions/answer.entity';
 
 @Entity('images')
 export class Image {
@@ -41,6 +42,10 @@ export class Image {
 
   @ManyToOne(() => Trail, (trail) => trail.images)
   trail: Trail;
+
+  @OneToOne(() => Answer)
+  @JoinColumn()
+  answer: Answer;
 
   @OneToOne(() => Gear)
   @JoinColumn()

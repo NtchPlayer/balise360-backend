@@ -10,11 +10,12 @@ export class QuestionsService {
     private readonly questionRepository: Repository<Question>,
   ) {}
 
-  async findAll(): Promise<Question[]> {
+  async findAll(trail_question: boolean): Promise<Question[]> {
     return this.questionRepository.find({
-      relations: {
-        answers: true,
+      where: {
+        trail_question: trail_question,
       },
+      relations: ['answers', 'answers.image'],
     });
   }
 

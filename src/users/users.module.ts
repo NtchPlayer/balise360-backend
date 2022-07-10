@@ -11,11 +11,11 @@ import { RefreshToken } from '../token/refresh-token.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Answer } from '../questions/answer.entity';
-import { Notice } from '../notices/notice.entity';
+import { Review } from '../reviews/review.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, RefreshToken, Answer, Notice]),
+    TypeOrmModule.forFeature([User, RefreshToken, Answer, Review]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async () => ({

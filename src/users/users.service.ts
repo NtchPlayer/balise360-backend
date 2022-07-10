@@ -11,7 +11,7 @@ import { Answer } from '../questions/answer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
 import { NoticeCreateDto } from './dto/notice-create-dto';
-import { Notice } from '../notices/notice.entity';
+import { Review } from '../reviews/review.entity';
 
 @Injectable()
 export class UsersService {
@@ -20,8 +20,8 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Answer)
     private readonly answerRepository: Repository<Answer>,
-    @InjectRepository(Notice)
-    private readonly noticeRepository: Repository<Notice>,
+    @InjectRepository(Review)
+    private readonly noticeRepository: Repository<Review>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -106,14 +106,14 @@ export class UsersService {
     return this.usersRepository.find({
       select: {
         id: true,
-        notices: {
+        reviews: {
           id: true,
           notation: true,
           description: true,
         },
       },
       relations: {
-        notices: true,
+        reviews: true,
       },
       where: {
         id: userId,
@@ -125,7 +125,7 @@ export class UsersService {
     const user = await this.usersRepository.findOne({
       select: {
         id: true,
-        notices: {
+        reviews: {
           id: true,
           notation: true,
           description: true,

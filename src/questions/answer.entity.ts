@@ -6,9 +6,12 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Question } from './question.entity';
 import { QuizData } from '../quizDatas/quizData.entity';
+import { Image } from '../images/image.entity';
 
 @Entity('answers')
 export class Answer {
@@ -46,4 +49,8 @@ export class Answer {
     cascade: true,
   })
   quizDatas: QuizData[];
+
+  @OneToOne(() => Image)
+  @JoinColumn()
+  image: Image;
 }

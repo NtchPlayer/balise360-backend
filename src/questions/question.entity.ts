@@ -33,7 +33,7 @@ export class Question {
   description: string;
 
   @Column('boolean', { default: false })
-  trail_question: string;
+  trail_question: boolean;
 
   @OneToMany(() => Answer, (answer) => answer.question)
   answers: Answer[];

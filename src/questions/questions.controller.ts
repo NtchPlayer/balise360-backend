@@ -4,7 +4,8 @@ import {
   Param,
   ParseIntPipe,
   NotFoundException,
-} from '@nestjs/common';
+  ParseBoolPipe, Body
+} from "@nestjs/common";
 import { Question } from './question.entity';
 import { QuestionsService } from './questions.service';
 
@@ -13,8 +14,10 @@ export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
 
   @Get('questions')
-  findAll(): Promise<Question[]> {
-    return this.questionsService.findAll();
+  findAll(
+    @Body('trail_question', ParseBoolPipe) trail_question: boolean,
+  ): Promise<Question[]> {
+    return this.questionsService.findAll(trail_question);
   }
 
   @Get('questions/:id')

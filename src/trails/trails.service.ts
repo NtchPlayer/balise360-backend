@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { IsNull, Repository, Not } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Trail } from './trail.entity';
 import { Trip } from '../trips/trip.entity';
@@ -17,9 +17,26 @@ export class TrailsService {
 
   async getAllTrails() {
     return this.trailRepository.find({
+      where: {
+        location: Not(IsNull()),
+      },
+      select: {
+        id: true,
+        name: true,
+        location: true,
+        updatedAt: true,
+        description: true,
+        difficulty: {
+          level: true,
+        },
+        images: {
+          file: true,
+          alt: true,
+        },
+      },
       relations: {
         images: true,
-        traffic: true,
+        difficulty: true,
       },
     });
   }

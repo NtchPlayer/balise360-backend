@@ -15,6 +15,16 @@ import { CreateTrailsDto } from './dto';
 export class TrailsController {
   constructor(private readonly trailsService: TrailsService) {}
 
+  @Get()
+  async getAllTrails() {
+    return this.trailsService.getAllTrails();
+  }
+
+  @Get('/gears')
+  async getAllGears() {
+    return this.trailsService.getAllGears();
+  }
+
   @Post('add')
   create(@Body() createTrailsDto: CreateTrailsDto) {
     return this.trailsService.createTrail(createTrailsDto);

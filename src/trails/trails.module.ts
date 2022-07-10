@@ -7,13 +7,14 @@ import { TrailsController } from './trails.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Trail } from './trail.entity';
 import { Trip } from '../trips/trip.entity';
+import { Gear } from '../gears/gear.entity';
 
 // import { JwtModule } from '@nestjs/jwt';
 // import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Trail, Trip]),
+    TypeOrmModule.forFeature([Trail, Trip, Gear]),
     // JwtModule.registerAsync({
     //   imports: [ConfigModule],
     //   useFactory: async () => ({

@@ -4,13 +4,41 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Trail } from './trail.entity';
 import { Trip } from '../trips/trip.entity';
 import { CreateTrailsDto } from './dto';
+import { Gear } from '../gears/gear.entity';
 
 @Injectable()
 export class TrailsService {
   constructor(
     @InjectRepository(Trail)
     private readonly trailRepository: Repository<Trail>,
+    @InjectRepository(Gear)
+    private readonly gearRepository: Repository<Gear>,
   ) {}
+
+  async getAllTrails() {
+    return this.trailRepository.find({
+      relations: {
+        images: true,
+        traffic: true,
+      },
+    });
+  }
+
+  async getAllGears() {
+    return this.gearRepository.find({
+      select: {
+        id: true,
+        name: true,
+        links: true,
+        gear_category: {
+          name: true,
+        },
+      },
+      relations: {
+        gear_category: true,
+      },
+    });
+  }
 
   async createTrail(createTrailDto: CreateTrailsDto) {
     const trail = new Trail();

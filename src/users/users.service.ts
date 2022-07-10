@@ -1,4 +1,8 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { User } from './user.entity';
 import { QuizData } from '../quizDatas/quizData.entity';
 import { CreateUserDto, AddQuizResultDto } from './dto';
@@ -6,6 +10,8 @@ import { Repository } from 'typeorm';
 import { Answer } from '../questions/answer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
+import { NoticeCreateDto } from './dto/notice-create-dto';
+import { Notice } from '../notices/notice.entity';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +20,8 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Answer)
     private readonly answerRepository: Repository<Answer>,
+    @InjectRepository(Notice)
+    private readonly noticeRepository: Repository<Notice>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -74,5 +82,82 @@ export class UsersService {
     dataUser.profile = addQuizResultDto.score;
 
     return await this.usersRepository.save(dataUser);
+  }
+
+  async getAllfavorites(userId: number) {
+    return this.usersRepository.find({
+      select: {
+        id: true,
+        password: false,
+        favorites: true,
+      },
+      relations: {
+        favorites: {
+          images: true,
+        },
+      },
+      where: {
+        id: userId,
+      },
+    });
+  }
+
+  async getAllNotices(userId: number) {
+    return this.usersRepository.find({
+      select: {
+        id: true,
+        notices: {
+          id: true,
+          notation: true,
+          description: true,
+        },
+      },
+      relations: {
+        notices: true,
+      },
+      where: {
+        id: userId,
+      },
+    });
+  }
+
+  async addNotices(notice: NoticeCreateDto) {
+    const user = await this.usersRepository.findOne({
+      select: {
+        id: true,
+        notices: {
+          id: true,
+          notation: true,
+          description: true,
+        },
+      },
+      where: {
+        id: notice.userId,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    this.noticeRepository.create(notice);
+  }
+
+  async deleteFavorite(userId: number, trailId: number) {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    user.favorites = user.favorites.filter((favorite) => {
+      return favorite.id !== trailId;
+    });
+
+    await this.usersRepository.manager.save(user);
   }
 }

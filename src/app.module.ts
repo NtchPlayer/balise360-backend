@@ -10,7 +10,6 @@ import { AppService } from './app.service';
 import { AppController } from './app.controller';
 
 // Entity
-import { Cat } from './cats/cat.entity';
 import { User } from './users/user.entity';
 import { Question } from './questions/question.entity';
 import { Answer } from './questions/answer.entity';
@@ -20,14 +19,13 @@ import { Trail } from './trails/trail.entity';
 import { Trip } from './trips/trip.entity';
 import { Difficulty } from './difficulties/difficulty.entity';
 import { Image } from './images/image.entity';
-import { Notice } from './notices/notice.entity';
-import { Traffic } from './traffics/traffic.entity';
+import { Review } from './reviews/review.entity';
 import { GearCategory } from './gears/gearCategories.entity';
 import { Gear } from './gears/gear.entity';
+import { AdminUser } from './userAdmin/user-admin.entity';
 
 // Module
 import { AuthModule } from './auth/auth.module';
-import { CatsModule } from './cats/cats.module';
 import { NewsletterModule } from './newsletter/newsletter.module';
 import { UsersModule } from './users/users.module';
 import { QuestionsModule } from './questions/questions.modules';
@@ -59,7 +57,6 @@ import { TripsModule } from './trips/trips.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [
-        Cat,
         User,
         RefreshToken,
         Question,
@@ -69,15 +66,14 @@ import { TripsModule } from './trips/trips.module';
         Trip,
         Difficulty,
         Image,
-        Notice,
-        Traffic,
+        Review,
         GearCategory,
         Gear,
+        AdminUser,
       ],
       synchronize: Boolean(process.env.IS_DEV) || false,
     }),
     AuthModule,
-    CatsModule,
     UsersModule,
     NewsletterModule,
     QuestionsModule,

@@ -8,8 +8,9 @@ import {
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Answer } from '../questions/answer.entity';
+import { Trail } from '../trails/trail.entity';
 
-@Entity('quizdatas')
+@Entity('quiz_datas')
 export class QuizData {
   @PrimaryGeneratedColumn({
     type: 'int',
@@ -38,4 +39,8 @@ export class QuizData {
   // Des quizData sont associés à un utilisateur
   @ManyToOne(() => User, (user) => user.quizDatas)
   user: User;
+
+  // Des quizData sont associés à un utilisateur
+  @ManyToOne(() => Trail, (trail) => trail.quizDatas)
+  trail: Trail;
 }

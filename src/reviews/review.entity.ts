@@ -9,8 +9,8 @@ import {
 import { Trail } from '../trails/trail.entity';
 import { User } from '../users/user.entity';
 
-@Entity('notices')
-export class Notice {
+@Entity('reviews')
+export class Review {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
@@ -38,10 +38,10 @@ export class Notice {
   notation: number;
 
   // Un avi est sur un trail
-  @ManyToOne(() => Trail, (trail) => trail.notices)
+  @ManyToOne(() => Trail, (trail) => trail.reviews)
   trail: Trail;
 
   // Un avi est sur un trail
-  @ManyToOne(() => User, (user) => user.notices)
+  @ManyToOne(() => User, (user) => user.reviews)
   user: User;
 }

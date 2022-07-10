@@ -4,12 +4,12 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  BeforeInsert,
 } from 'typeorm';
-import { Trail } from '../trails/trail.entity';
+import { hash } from 'bcryptjs';
 
-@Entity('traffics')
-export class Traffic {
+@Entity('users_admin')
+export class AdminUser {
   @PrimaryGeneratedColumn({
     type: 'int',
   })
@@ -30,10 +30,17 @@ export class Traffic {
   })
   updatedAt: Date;
 
-  @Column('varchar', { length: 200 })
-  description: string;
+  @Column('varchar', { length: 30 })
+  email: string;
 
-  // Des quizData sont associés à une réponse
-  @OneToMany(() => Trail, (trail) => trail.traffic)
-  trails: Trail[];
+  @Column('varchar', { length: 150 })
+  password: string;
+
+  @Column('varchar', { length: '50', nullable: true })
+  username?: string;
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await hash(this.password, 8);
+  }
 }

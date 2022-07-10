@@ -5,8 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Answer } from './answer.entity';
+import { Trail } from '../trails/trail.entity';
 
 @Entity('questions')
 export class Question {
@@ -29,6 +32,13 @@ export class Question {
   @Column('varchar', { length: 150, nullable: true })
   description: string;
 
+  @Column('boolean', { default: false })
+  trail_question: string;
+
   @OneToMany(() => Answer, (answer) => answer.question)
   answers: Answer[];
+
+  @ManyToMany(() => Trail)
+  @JoinTable()
+  trails: Trail[];
 }

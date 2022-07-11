@@ -5,11 +5,13 @@ import {
   Body,
   Param,
   ParseIntPipe,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 
 import { TrailsService } from './trails.service';
-import { CreateTrailsDto } from './dto';
-// import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { CreateTrailsDto, AddSurveyDto } from './dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('trails')
 export class TrailsController {
@@ -33,6 +35,16 @@ export class TrailsController {
   @Get(':id')
   async show(@Param('id', ParseIntPipe) id: number) {
     return await this.trailsService.showTrailById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('survey')
+  addSurveyResponse(@Body() addSurveyDto: AddSurveyDto, @Request() req) {
+    console.log(addSurveyDto);
+    return this.trailsService.addSurvey(
+      parseInt(req.user.userId),
+      addSurveyDto,
+    );
   }
 
   // @Get('kml/:id')

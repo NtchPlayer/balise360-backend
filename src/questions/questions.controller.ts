@@ -4,8 +4,9 @@ import {
   Param,
   ParseIntPipe,
   NotFoundException,
-  ParseBoolPipe, Body
-} from "@nestjs/common";
+  ParseBoolPipe,
+  Query,
+} from '@nestjs/common';
 import { Question } from './question.entity';
 import { QuestionsService } from './questions.service';
 
@@ -15,7 +16,7 @@ export class QuestionsController {
 
   @Get('questions')
   findAll(
-    @Body('trail_question', ParseBoolPipe) trail_question: boolean,
+    @Query('trail_question', ParseBoolPipe) trail_question: boolean,
   ): Promise<Question[]> {
     return this.questionsService.findAll(trail_question);
   }

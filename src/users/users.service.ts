@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { QuizData } from '../quizDatas/quizData.entity';
-import { CreateUserDto, AddQuizResultDto } from './dto';
+import { CreateUserDto, AddQuizResultDto, UpdateUserDto } from './dto';
 import { Repository } from 'typeorm';
 import { Answer } from '../questions/answer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -159,5 +159,18 @@ export class UsersService {
     });
 
     await this.usersRepository.manager.save(user);
+  }
+
+  async updateUser(userId: number, data: UpdateUserDto) {
+    const user = await this.usersRepository.findOneBy({ id: userId });
+
+    user.gender = data.gender;
+    user.username = data.username;
+    user.lastname = data.lastname;
+    user.firstname = data.firstname;
+    user.email = data.email;
+    user.birthday = data.birthday;
+
+    return await this.usersRepository.save(user);
   }
 }

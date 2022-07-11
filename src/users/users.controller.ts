@@ -12,7 +12,7 @@ import {
 
 import { UsersService } from './users.service';
 import { TokenService } from '../token/token.service';
-import { CreateUserDto, AddQuizResultDto } from './dto';
+import { CreateUserDto, AddQuizResultDto, UpdateUserDto } from './dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { NoticeCreateDto } from './dto/notice-create-dto';
 
@@ -79,5 +79,11 @@ export class UsersController {
     const userId = req.user.userId;
     data.userId = userId;
     return this.usersService.addNotices(data);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/update')
+  async updateUser(@Request() req, @Body() data: UpdateUserDto) {
+    return this.usersService.updateUser(req.user.userId, data);
   }
 }

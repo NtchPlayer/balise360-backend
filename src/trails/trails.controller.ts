@@ -40,7 +40,6 @@ export class TrailsController {
   @UseGuards(JwtAuthGuard)
   @Post('survey')
   addSurveyResponse(@Body() addSurveyDto: AddSurveyDto, @Request() req) {
-    console.log(addSurveyDto);
     return this.trailsService.addSurvey(
       parseInt(req.user.userId),
       addSurveyDto,
